@@ -1,32 +1,33 @@
-import { useState } from 'react'
-import  {InputBox}  from './components'
-import useCurrencyInfo from './hooks/useCurrencyInfo'
+import { useState } from "react";
+import { InputBox } from "./components";
+import useCurrencyInfo from "./hooks/useCurrencyInfo";
+import bgImg from "../public/assets/bgImg.jpg";
 
 function App() {
-  const [amount, setAmount] = useState(0)
-  const [from, setFrom] = useState('usd')
-  const [to, setTo] = useState('inr')
-  const [convertedAmount, setConvertedAmount] = useState(0)
+  const [amount, setAmount] = useState(0);
+  const [from, setFrom] = useState("usd");
+  const [to, setTo] = useState("inr");
+  const [convertedAmount, setConvertedAmount] = useState(0);
 
-  const currencyInfo = useCurrencyInfo(from)
-  const options = Object.keys(currencyInfo)
+  const currencyInfo = useCurrencyInfo(from);
+  const options = Object.keys(currencyInfo);
 
   const swap = () => {
     setFrom(to);
-    setTo(from)
-    setConvertedAmount(amount)
-    setAmount(convertedAmount)
-  }
+    setTo(from);
+    setConvertedAmount(amount);
+    setAmount(convertedAmount);
+  };
 
   const convert = () => {
-    setConvertedAmount(amount * currencyInfo[to])
-  }
+    setConvertedAmount(amount * currencyInfo[to]);
+  };
 
   return (
     <div
       className="w-full h-screen flex flex-wrap justify-center items-center bg-cover bg-no-repeat"
       style={{
-        backgroundImage: `url('https://media.istockphoto.com/id/504246822/photo/forex-currency-trading-concept.jpg?s=612x612&w=0&k=20&c=CeTyIh5lRv_UvYKX-BbGMRRCl916JlnDRkYoQdf-oNM=')`,
+        backgroundImage: `url(${bgImg})`,
       }}
     >
       <div className="w-full">
@@ -34,7 +35,7 @@ function App() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              convert()
+              convert();
             }}
           >
             <div className="w-full mb-1">
@@ -42,10 +43,9 @@ function App() {
                 label="From"
                 amount={amount}
                 currencyOptions={options}
-                onCurrencyChange={(currency)=>setFrom(currency)}
+                onCurrencyChange={(currency) => setFrom(currency)}
                 selectCurrency={from}
                 onAmountChange={(amount) => setAmount(amount)}
-                
               />
             </div>
             <div className="relative w-full h-0.5">
@@ -62,12 +62,15 @@ function App() {
                 label="To"
                 amount={convertedAmount}
                 currencyOptions={options}
-                onCurrencyChange={(currency)=> setTo(currency)}
+                onCurrencyChange={(currency) => setTo(currency)}
                 selectCurrency={to}
                 amountDisable
               />
             </div>
-            <button type="submit" className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg">
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg"
+            >
               Convert {from.toUpperCase()} to {to.toUpperCase()}
             </button>
           </form>
@@ -77,4 +80,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
